@@ -6,7 +6,6 @@ public class Elevator {
     private int currentFloor;
     private String state;
     private boolean hasPriority = true;
-    private int previousFloor;
 
     public boolean hasPriority() {
         return hasPriority;
@@ -14,14 +13,6 @@ public class Elevator {
 
     public void setHasPriority(boolean hasPriority) {
         this.hasPriority = hasPriority;
-    }
-
-    public int getPreviousFloor() {
-        return previousFloor;
-    }
-
-    public void setPreviousFloor(int previousFloor) {
-        this.previousFloor = previousFloor;
     }
 
     public static class Builder {
@@ -55,7 +46,6 @@ public class Elevator {
             Elevator elevator = new Elevator();
             elevator.id = this.id;
             elevator.currentFloor = this.currentFloor;
-            elevator.previousFloor = this.currentFloor;
             elevator.state = this.state;
             return elevator;
         }

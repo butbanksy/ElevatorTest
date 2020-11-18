@@ -25,8 +25,7 @@ public class Building {
 
 
         // We loop over every elevator, then create a new elevator object and add it to our list of elevators
-        for (String elevatorString : elevators)
-        {
+        for (String elevatorString : elevators) {
             //the variable parts receive two parts, the id(string) and the currentFloor(int). The elevator is resting by default
             String[] parts = elevatorString.split(":");
             Elevator elevator = new Elevator.Builder(parts[0], Integer.parseInt(parts[1])).withState("REST").build();
@@ -43,8 +42,8 @@ public class Building {
     public String requestElevator() {
 
         Elevator elevator = elevatorsArray.stream()
-                .filter(e->e.getState().equals("REST") || e.getState().equals("DOWN") && e.hasPriority())
-                .min(Comparator.comparing(Elevator::getPreviousFloor))
+                .filter(e -> e.getState().equals("REST") || e.getState().equals("DOWN") && e.hasPriority())
+                .min(Comparator.comparing(Elevator::getCurrentFloor))
                 .orElseThrow(NoSuchElementException::new);
 
 
@@ -77,7 +76,7 @@ public class Building {
     public void stopAt(String elevatorId, int floor) {
         for (Elevator elevator : elevatorsArray) {
             if (elevator.getId().equals(elevatorId)) {
-                elevator.setCurrentFloor(2);
+                elevator.setCurrentFloor(floor);
                 elevator.setHasPriority(false);
                 break;
             }
@@ -96,13 +95,10 @@ public class Building {
             if (elevator.getId().equals(elevatorId)) {
                 switch (direction) {
                     case "UP":
-                        elevator.setCurrentFloor(10);
                         elevator.setState("UP");
                         break;
                     case "DOWN":
                         elevator.setState("DOWN");
-                        elevator.setPreviousFloor(elevator.getCurrentFloor());
-                        elevator.setCurrentFloor(0);
                         break;
                 }
                 break;
